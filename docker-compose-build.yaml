@@ -4,4 +4,4 @@ services:
     build:
       context: ./
       dockerfile: ./libs/backend/user/Dockerfile
-    image: igomezdockerhub/recipes-api-user:v1
+    image: igomezdockerhub/recipes-api-user:v1.01
