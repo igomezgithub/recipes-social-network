@@ -5,10 +5,15 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
+    "build:api-user": "tsc -p ./libs/backend/user/tsconfig.lib.json && node ./dist/out-tsc/libs/backend/user/src/lib/server.js",
+    "docker-compose-build:api-user": "docker-compose -f docker-compose-build.yaml build",
+    "docker-compose-run:api-user": "docker-compose -f docker-compose.yaml up -d",
     "test": "nx test"
   },
   "private": true,
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -20,8 +25,11 @@
     "@nrwl/linter": "12.9.0",
     "@nrwl/tao": "12.9.0",
     "@nrwl/workspace": "12.9.0",
+    "@nx-tools/nx-docker": "^1.0.5",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
     "@types/jest": "26.0.24",
-    "@types/node": "14.14.33",
+    "@types/node": "^14.14.33",
     "@typescript-eslint/eslint-plugin": "~4.28.3",
     "@typescript-eslint/parser": "~4.28.3",
     "eslint": "7.22.0",
