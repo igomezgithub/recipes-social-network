@@ -29,6 +29,16 @@
   "projects": {
     "backend-user": {
       "tags": []
+    },
+    "frontend-recipe-domain": {
+      "tags": ["domain:recipe", "type:domain-logic"]
+    },
+    "recipe": {
+      "tags": ["domain:apps/recipe", "type:app"]
+    },
+    "recipe-e2e": {
+      "tags": [],
+      "implicitDependencies": ["recipe"]
     }
   }
 }

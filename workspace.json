@@ -9,28 +9,225 @@
         "build": {
           "executor": "@nrwl/workspace:run-commands",
           "options": {
-            "command":  "npm run build:user"
+            "command": "npm run build:user"
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/backend/user/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/backend/user/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/backend/user"],
+          "outputs": [
+            "coverage/libs/backend/user"
+          ],
           "options": {
             "jestConfig": "libs/backend/user/jest.config.js",
             "passWithNoTests": true
           }
         }
       }
+    },
+    "frontend-recipe-domain": {
+      "projectType": "library",
+      "root": "libs/frontend/recipe/domain",
+      "sourceRoot": "libs/frontend/recipe/domain/src",
+      "prefix": "recipe",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:ng-packagr-lite",
+          "outputs": [
+            "dist/libs/frontend/recipe/domain"
+          ],
+          "options": {
+            "project": "libs/frontend/recipe/domain/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/frontend/recipe/domain/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/frontend/recipe/domain/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/frontend/recipe/domain"
+          ],
+          "options": {
+            "jestConfig": "libs/frontend/recipe/domain/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/frontend/recipe/domain/src/**/*.ts",
+              "libs/frontend/recipe/domain/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "recipe": {
+      "projectType": "application",
+      "root": "apps/recipe",
+      "sourceRoot": "apps/recipe/src",
+      "prefix": "recipes-social-network",
+      "targets": {
+        "build": {
+          "executor": "@angular-devkit/build-angular:browser",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/recipe",
+            "index": "apps/recipe/src/index.html",
+            "main": "apps/recipe/src/main.ts",
+            "polyfills": "apps/recipe/src/polyfills.ts",
+            "tsConfig": "apps/recipe/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/recipe/src/favicon.ico",
+              "apps/recipe/src/assets"
+            ],
+            "styles": [
+              "apps/recipe/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/recipe/src/environments/environment.ts",
+                  "with": "apps/recipe/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "executor": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "recipe:build:production"
+            },
+            "development": {
+              "browserTarget": "recipe:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "executor": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "recipe:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/recipe/src/**/*.ts",
+              "apps/recipe/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/recipe"
+          ],
+          "options": {
+            "jestConfig": "apps/recipe/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "recipe-e2e": {
+      "root": "apps/recipe-e2e",
+      "sourceRoot": "apps/recipe-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/recipe-e2e/cypress.json",
+            "devServerTarget": "recipe:serve:development",
+            "tsConfig": "apps/recipe-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "recipe:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/recipe-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/angular"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
   }
 }
