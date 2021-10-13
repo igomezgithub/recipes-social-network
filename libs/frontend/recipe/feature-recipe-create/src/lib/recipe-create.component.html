@@ -1,0 +1,10 @@
+<h1>frontend/recipe-recipe-create</h1>
+
+<table class="table">
+  <tr *ngFor="let recipe of recipeList$ | async">
+    <td>{{recipe.id}}</td>
+    <td>{{recipe.name}}</td>
+    <td>{{recipe.description}}</td>
+  </tr>
+</table>
+

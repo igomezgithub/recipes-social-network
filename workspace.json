@@ -80,6 +80,51 @@
         }
       }
     },
+    "frontend-recipe-feature-recipe-create": {
+      "projectType": "library",
+      "root": "libs/frontend/recipe/feature-recipe-create",
+      "sourceRoot": "libs/frontend/recipe/feature-recipe-create/src",
+      "prefix": "frontend-recipe",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:ng-packagr-lite",
+          "outputs": [
+            "dist/libs/frontend/recipe/feature-recipe-create"
+          ],
+          "options": {
+            "project": "libs/frontend/recipe/feature-recipe-create/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/frontend/recipe/feature-recipe-create/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/frontend/recipe/feature-recipe-create/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/frontend/recipe/feature-recipe-create"
+          ],
+          "options": {
+            "jestConfig": "libs/frontend/recipe/feature-recipe-create/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/frontend/recipe/feature-recipe-create/src/**/*.ts",
+              "libs/frontend/recipe/feature-recipe-create/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "recipe": {
       "projectType": "application",
       "root": "apps/recipe",
