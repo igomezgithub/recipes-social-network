@@ -19,7 +19,7 @@ RUN npm ci
 COPY . .
 
 # Bind the port that the image will run on
-EXPOSE 8080
+EXPOSE 3000
 
 # Define the Docker image's behavior at runtime
 CMD ["npm", "run", "build:api-user"]

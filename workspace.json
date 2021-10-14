@@ -131,8 +131,18 @@
       "sourceRoot": "apps/recipe/src",
       "prefix": "recipes-social-network",
       "targets": {
+        "deploy": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run recipe:build",
+              "docker-compose -f docker-compose-build.yaml build"
+            ],
+            "parallel": false
+          }
+        },
         "build": {
-          "executor": "@angular-devkit/build-angular:browser",
+          "builder": "@nrwl/node:build",
           "outputs": [
             "{options.outputPath}"
           ],
@@ -150,6 +160,7 @@
             "styles": [
               "apps/recipe/src/styles.scss"
             ],
+            "generatePackageJson": true,
             "scripts": []
           },
           "configurations": {

@@ -5,11 +5,12 @@ FROM node:lts-alpine
 WORKDIR /usr/src/app
 
 # Install app dependencies by copying
-# package.json and package-lock.json
 COPY ./dist/apps/recipe .
+COPY ./dist/libs/frontend/recipe .
 
 # Clean and install dependencies
-RUN npm ci --production
+RUN npm install && \
+  npm ci --production --progress=false --no-audit --loglevel=error
 
 # Bundle app source
 COPY . .
