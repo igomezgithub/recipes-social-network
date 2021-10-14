@@ -5,3 +5,8 @@ services:
       context: ./
       dockerfile: ./libs/backend/user/Dockerfile
     image: igomezdockerhub/recipes-api-user:v1.01
+  frontend:
+    build:
+      context: ./
+      dockerfile: ./apps/recipe/Dockerfile
+    image: igomezdockerhub/recipes-frontend-recipe:v1.01
