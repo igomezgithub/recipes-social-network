@@ -1,22 +1,24 @@
 # Use NodeJS base image
-FROM node:lts-alpine
+FROM node:12-alpine
+
+ENV NODE_ENV development
 
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies by copying
-COPY ./dist/apps/recipe .
-COPY ./dist/libs/frontend/recipe .
+# Install app dependencies
+COPY package*.json ./
+COPY workspace.json ./
 
 # Clean and install dependencies
-RUN npm install && \
-  npm ci --production --progress=false --no-audit --loglevel=error
+RUN npm ci
 
 # Bundle app source
 COPY . .
 
 # Bind the port that the image will run on
-EXPOSE 8080
+EXPOSE 4200
 
 # Define the Docker image's behavior at runtime
-CMD ["node", "./main.js"]
+# CMD ["node", "./main.js"]
+CMD ["npx", "nx", "serve", "recipe"]
