@@ -1,7 +1,12 @@
 version: "3"
 services:
-  backend_user:
+  # backend_user:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./libs/backend/user/Dockerfile
+  #   image: igomezdockerhub/recipes-api-user:v1.01
+  frontend:
     build:
       context: ./
-      dockerfile: ./libs/backend/user/Dockerfile
-    image: igomezdockerhub/recipes-api-user:v1.01
+      dockerfile: ./apps/recipe/Dockerfile
+    image: igomezdockerhub/recipes-frontend-recipe:v1.01

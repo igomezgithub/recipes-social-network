@@ -15,7 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@recipes-social-network/backend/user": ["libs/backend/user/src/index.ts"]
+      "@recipes-social-network/backend/user": [
+        "libs/backend/user/src/index.ts"
+      ],
+      "@recipes-social-network/frontend/recipe/domain": [
+        "libs/frontend/recipe/domain/src/index.ts"
+      ],
+      "@recipes-social-network/frontend/recipe/feature-recipe-create": [
+        "libs/frontend/recipe/feature-recipe-create/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

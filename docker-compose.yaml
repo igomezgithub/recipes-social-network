@@ -1,6 +1,10 @@
 version: "3"
 services:
-  backend-user:
-    image: igomezdockerhub/recipes-api-user:v1.01
+  # backend-user:
+  #   image: igomezdockerhub/recipes-api-user:v1.01
+  #   ports:
+  #     - 8080:8080
+  frontend:
+    image: igomezdockerhub/recipes-frontend-recipe:v1.01
     ports:
-      - 8080:8080
+      - "4200:4200"
