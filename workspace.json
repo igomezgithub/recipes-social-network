@@ -1,6 +1,57 @@
 {
   "version": 2,
   "projects": {
+    "api-recipes": {
+      "root": "apps/api/recipes",
+      "sourceRoot": "apps/api/recipes/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/api/recipes",
+            "main": "apps/api/recipes/src/main.ts",
+            "tsConfig": "apps/api/recipes/tsconfig.app.json",
+            "assets": ["apps/api/recipes/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/recipes/src/environments/environment.ts",
+                  "with": "apps/api/recipes/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api-recipes:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/api/recipes/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/api/recipes"],
+          "options": {
+            "jestConfig": "apps/api/recipes/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "backend-user": {
       "root": "libs/backend/user",
       "sourceRoot": "libs/backend/user/src",
@@ -14,20 +65,14 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "libs/backend/user/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/backend/user/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/backend/user"
-          ],
+          "outputs": ["coverage/libs/backend/user"],
           "options": {
             "jestConfig": "libs/backend/user/jest.config.js",
             "passWithNoTests": true
@@ -43,9 +88,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/angular:ng-packagr-lite",
-          "outputs": [
-            "dist/libs/frontend/recipe/domain"
-          ],
+          "outputs": ["dist/libs/frontend/recipe/domain"],
           "options": {
             "project": "libs/frontend/recipe/domain/ng-package.json"
           },
@@ -61,9 +104,7 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/frontend/recipe/domain"
-          ],
+          "outputs": ["coverage/libs/frontend/recipe/domain"],
           "options": {
             "jestConfig": "libs/frontend/recipe/domain/jest.config.js",
             "passWithNoTests": true
@@ -88,9 +129,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/angular:ng-packagr-lite",
-          "outputs": [
-            "dist/libs/frontend/recipe/feature-recipe-create"
-          ],
+          "outputs": ["dist/libs/frontend/recipe/feature-recipe-create"],
           "options": {
             "project": "libs/frontend/recipe/feature-recipe-create/ng-package.json"
           },
@@ -106,9 +145,7 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/frontend/recipe/feature-recipe-create"
-          ],
+          "outputs": ["coverage/libs/frontend/recipe/feature-recipe-create"],
           "options": {
             "jestConfig": "libs/frontend/recipe/feature-recipe-create/jest.config.js",
             "passWithNoTests": true
@@ -132,7 +169,7 @@
       "prefix": "recipes-social-network",
       "targets": {
         "deploy": {
-          "builder": "@nrwl/workspace:run-commands",
+          "executor": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
               "nx run recipe:build",
@@ -142,10 +179,8 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/recipe",
             "index": "apps/recipe/src/index.html",
@@ -153,13 +188,8 @@
             "polyfills": "apps/recipe/src/polyfills.ts",
             "tsConfig": "apps/recipe/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "apps/recipe/src/favicon.ico",
-              "apps/recipe/src/assets"
-            ],
-            "styles": [
-              "apps/recipe/src/styles.scss"
-            ],
+            "assets": ["apps/recipe/src/favicon.ico", "apps/recipe/src/assets"],
+            "styles": ["apps/recipe/src/styles.scss"],
             "generatePackageJson": true,
             "scripts": []
           },
@@ -206,7 +236,10 @@
               "browserTarget": "recipe:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "apps/recipe/proxy.conf.json"
+          }
         },
         "extract-i18n": {
           "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -225,9 +258,7 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/recipe"
-          ],
+          "outputs": ["coverage/apps/recipe"],
           "options": {
             "jestConfig": "apps/recipe/jest.config.js",
             "passWithNoTests": true
@@ -255,13 +286,9 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "apps/recipe-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/recipe-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -285,5 +312,6 @@
     "@nrwl/angular:component": {
       "style": "scss"
     }
-  }
+  },
+  "defaultProject": "api-recipes"
 }

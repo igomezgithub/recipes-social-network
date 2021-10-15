@@ -27,6 +27,9 @@
     ]
   },
   "projects": {
+    "api-recipes": {
+      "tags": []
+    },
     "backend-user": {
       "tags": []
     },
